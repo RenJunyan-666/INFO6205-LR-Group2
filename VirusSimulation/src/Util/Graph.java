@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import City.Block;
+import City.City;
 import Hospital.Hospital;
 import Population.*;
 
@@ -58,6 +61,13 @@ public class Graph extends JPanel implements Runnable {
             }
             person.update();//update states of people
             g.fillOval(person.getX(), person.getY(), 3, 3);
+        }
+
+        //set blocks
+        City city = new City(400,400);
+        for(Block b : city.getBlockList()){
+            g.setColor(Color.MAGENTA);
+            g.drawRect(b.getBlockX(),b.getBlockY(),20,20);
         }
 
         int captionStartOffsetX = 700 + Hospital.getInstance().getWidth() + 40;

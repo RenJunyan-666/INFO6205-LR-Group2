@@ -11,7 +11,7 @@ public class Factors {
      * -0.99 people will contact with low level of intention
      * 0.99 people will contact with high level of intention
      */
-    public static float Contact_Intention = -0.99f;
+    public static float Contact_Intention = 0.99f;
     public static int CITY_PERSON_SIZE = 5000;//size of people in this city
     public static float FATALITY_RATE = 0.50f;//fatality rate
     public static int DIE_TIME = 100;//from diagnosis to death
@@ -21,4 +21,6 @@ public class Factors {
      */
     public static final int CITY_WIDTH = 700;
     public static final int CITY_HEIGHT = 800;
+
+    public static final float MASK = 0.2f;//have mask
 }

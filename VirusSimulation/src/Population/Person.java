@@ -1,6 +1,6 @@
 package Population;
 
-import City.City;
+import City.*;
 import Hospital.*;
 import Util.*;
 
@@ -21,6 +21,7 @@ public class Person extends Point implements State{
     public Person(City city, int x, int y) {
         super(x, y);
         this.city = city;
+
         //init people position
         targetXU = MathUtil.stdGaussian(100, x);
         targetYU = MathUtil.stdGaussian(100, y);
@@ -67,6 +68,12 @@ public class Person extends Point implements State{
 
     //distance between two different people points
     public double distance(Person person) {
+        for(Block b : city.getBlockList()){
+            if((getX() >= b.getBlockX() && getX() <= b.getBlockX()+20) && (getY() >= b.getBlockY() && getY() <= b.getBlockY()+20)){
+                //the person is blocked
+                return SAFE_DIST-0.1;//the person must be close to each other
+            }
+        }
         return Math.sqrt(Math.pow(getX() - person.getX(), 2) + Math.pow(getY() - person.getY(), 2));
     }
 
@@ -139,6 +146,14 @@ public class Person extends Point implements State{
 
     private float SAFE_DIST = 2f;//safe distance
 
+    //have mask or not
+    public boolean mask(){
+        float possibility = new Random().nextFloat();//the possibility of mask is 50%
+        if(possibility >= 0.5)
+            return true;
+        else return false;
+    }
+
     //update state of people
     public void update() {
         if (state == State.FREEZE || state == State.DEATH) {
@@ -199,10 +214,43 @@ public class Person extends Point implements State{
             if (person.getState() == State.NORMAL) {
                 continue;
             }
-            float fate = new Random().nextFloat();
+
+            //without mask factor
+            /*float fate = new Random().nextFloat();
             if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
                 this.beInfected();
                 break;
+            }*/
+
+            /**
+             * usage mask
+             * <p>
+             * usually broad rate of virus is 0.8
+             * one person with mask will be infected with 0.2 possibility
+             * <p>
+             * so 0.2 * 0.8 --> one with mask and another without mask
+             * 0.2 * 0.2 --> both with mask
+             */
+            float fate = new Random().nextFloat();
+            if(this.mask()){
+                if(person.mask()){//both with mask
+                    if (fate < Factors.MASK * Factors.MASK && distance(person) < SAFE_DIST) {
+                        this.beInfected();
+                        break;
+                    }
+                }
+                else {//one with mask
+                    if (fate < Factors.MASK * Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
+                        this.beInfected();
+                        break;
+                    }
+                }
+            }
+            else {
+                if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
+                    this.beInfected();
+                    break;
+                }
             }
         }
     }
