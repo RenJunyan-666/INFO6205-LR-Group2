@@ -42,13 +42,40 @@ public class Main {
      * init infection
      */
     private static void initInfected() {
-        List<Person> people = Population.getInstance().getPersonList();
+        /*List<Person> people = Population.getInstance().getPersonList();
         for (int i = 0; i < Factors.ORIGINAL_COUNT; i++) {
             Person person;
             do {
                 person = people.get(new Random().nextInt(people.size() - 1));//choose a healthy person randomly
             } while (person.isInfected());
             person.beInfected();//he will be infected
+        }*/
+
+        //set infection source on average
+        List<Person> people = Population.getInstance().getPersonList();
+        //left section
+        for (int i = 0; i < 20; i++) {
+            Person person;
+            do {
+                person = people.get(new Random().nextInt(people.size() - 1));
+            } while (person.isInfected() && (person.getX()>0 && person.getX()<230));
+            person.beInfected();
+        }
+        //central section
+        for (int i = 0; i < 20; i++) {
+            Person person;
+            do {
+                person = people.get(new Random().nextInt(people.size() - 1));
+            } while (person.isInfected() && (person.getX()>230 && person.getX()<460));
+            person.beInfected();
+        }
+        //right section
+        for (int i = 0; i < 20; i++) {
+            Person person;
+            do {
+                person = people.get(new Random().nextInt(people.size() - 1));
+            } while (person.isInfected() && (person.getX()>460 && person.getX()<700));
+            person.beInfected();
         }
     }
 

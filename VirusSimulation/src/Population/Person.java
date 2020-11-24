@@ -68,12 +68,12 @@ public class Person extends Point implements State{
 
     //distance between two different people points
     public double distance(Person person) {
-        for(Block b : city.getBlockList()){
+        /*for(Block b : city.getBlockList()){
             if((getX() >= b.getBlockX() && getX() <= b.getBlockX()+20) && (getY() >= b.getBlockY() && getY() <= b.getBlockY()+20)){
                 //the person is blocked
                 return SAFE_DIST-0.1;//the person must be close to each other
             }
-        }
+        }*/
         return Math.sqrt(Math.pow(getX() - person.getX(), 2) + Math.pow(getY() - person.getY(), 2));
     }
 
@@ -216,11 +216,11 @@ public class Person extends Point implements State{
             }
 
             //without mask factor
-            /*float fate = new Random().nextFloat();
+            float fate = new Random().nextFloat();
             if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
                 this.beInfected();
                 break;
-            }*/
+            }
 
             /**
              * usage mask
@@ -231,7 +231,7 @@ public class Person extends Point implements State{
              * so 0.2 * 0.8 --> one with mask and another without mask
              * 0.2 * 0.2 --> both with mask
              */
-            float fate = new Random().nextFloat();
+            /*float fate = new Random().nextFloat();
             if(this.mask()){
                 if(person.mask()){//both with mask
                     if (fate < Factors.MASK * Factors.MASK && distance(person) < SAFE_DIST) {
@@ -251,7 +251,7 @@ public class Person extends Point implements State{
                     this.beInfected();
                     break;
                 }
-            }
+            }*/
         }
     }
 }

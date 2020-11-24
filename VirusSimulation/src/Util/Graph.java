@@ -64,11 +64,11 @@ public class Graph extends JPanel implements Runnable {
         }
 
         //set blocks
-        City city = new City(400,400);
+        /*City city = new City(400,400);
         for(Block b : city.getBlockList()){
             g.setColor(Color.MAGENTA);
             g.drawRect(b.getBlockX(),b.getBlockY(),20,20);
-        }
+        }*/
 
         int captionStartOffsetX = 700 + Hospital.getInstance().getWidth() + 40;
         int captionStartOffsetY = 40;
