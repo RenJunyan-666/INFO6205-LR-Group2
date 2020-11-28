@@ -95,6 +95,10 @@ public class Graph extends JPanel implements Runnable {
         g.drawString("dead: " + Population.getInstance().getPeopleSize(Person.DEATH), captionStartOffsetX, captionStartOffsetY + 7 * captionSize);
         g.setColor(new Color(0xffffff));
         g.drawString("world time(day): " + (int) (worldTime / 10.0), captionStartOffsetX, captionStartOffsetY + 8 * captionSize);
+        g.setColor(new Color(0xF87BF504, true));
+        g.drawString("survivors: " + Population.getInstance().getCure(), captionStartOffsetX, captionStartOffsetY + 9 * captionSize);
+        g.setColor(new Color(0xDE0FD6));
+        g.drawString("Super Infectors: " + Population.getInstance().getSuperInfector(), captionStartOffsetX, captionStartOffsetY + 10 * captionSize);
 
     }
 

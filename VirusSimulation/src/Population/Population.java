@@ -32,6 +32,26 @@ public class Population {
         }
         return i;
     }
+    public int getSuperInfector() {
+        int i = 0;
+        for (Person person : personList) {
+            if (person.getState() >= 2&&person.getState()<=4) {
+                if(person.getSuper()){
+                    i++;}
+            }
+        }
+        return i;
+    }
+    public int getCure() {
+        int i = 0;
+        for (Person person : personList) {
+            if (person.getState() == 0) {
+                if(person.getCure()){
+                    i++;}
+            }
+        }
+        return i;
+    }
 
     private Population() {
         City city = new City(400, 400);//position of city center-->(400,400)
