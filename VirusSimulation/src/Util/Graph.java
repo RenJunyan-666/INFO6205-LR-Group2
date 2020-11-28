@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 import City.Block;
 import City.City;
-import Hospital.Hospital;
+import Hospital.*;
 import Population.*;
 
 public class Graph extends JPanel implements Runnable {
@@ -25,6 +25,15 @@ public class Graph extends JPanel implements Runnable {
         g.setFont(new Font("Tahoma", Font.BOLD, 10));
         g.setColor(new Color(0x00ff00));
         g.drawString("Hospital", Hospital.getInstance().getX() + Hospital.getInstance().getWidth() / 4, Hospital.getInstance().getY() - 16);
+        //plot quarantine boundary
+        g.setColor(new Color(0x0C21E0));
+        g.drawRect(Quarantine.getInstance().getX(), Quarantine.getInstance().getY(), Quarantine.getInstance().getWidth(), Quarantine.getInstance().getHeight());
+        g.setFont(new Font("Tahoma", Font.BOLD, 10));
+        g.setColor(new Color(0x0C21E0));
+        g.drawString("Quarantine", Quarantine.getInstance().getX() + Quarantine.getInstance().getWidth() / 4, Quarantine.getInstance().getY() - 16);
+        //plot City boundary
+        g.setColor(new Color(0xBE1BEA));
+        g.drawLine(0,400,700,400);
         //plot people points
         java.util.List<Person> people = Population.getInstance().getPersonList();
         if (people == null) {
@@ -95,6 +104,10 @@ public class Graph extends JPanel implements Runnable {
         g.drawString("dead: " + Population.getInstance().getPeopleSize(Person.DEATH), captionStartOffsetX, captionStartOffsetY + 7 * captionSize);
         g.setColor(new Color(0xffffff));
         g.drawString("world time(day): " + (int) (worldTime / 10.0), captionStartOffsetX, captionStartOffsetY + 8 * captionSize);
+        g.setColor(new Color(0xF87BF504, true));
+        g.drawString("survivors: " + Population.getInstance().getCure(), captionStartOffsetX, captionStartOffsetY + 9 * captionSize);
+        g.setColor(new Color(0xDE0FD6));
+        g.drawString("Super Infectors: " + Population.getInstance().getSuperInfector(), captionStartOffsetX, captionStartOffsetY + 10 * captionSize);
 
     }
 

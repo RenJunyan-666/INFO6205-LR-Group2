@@ -54,6 +54,7 @@ public class Main {
         //set infection source on average
         List<Person> people = Population.getInstance().getPersonList();
         //left section
+        /*
         for (int i = 0; i < 20; i++) {
             Person person;
             do {
@@ -75,6 +76,14 @@ public class Main {
             do {
                 person = people.get(new Random().nextInt(people.size() - 1));
             } while (person.isInfected() && (person.getX()>460 && person.getX()<700));
+            person.beInfected();
+        }*/
+
+        for (int i = 0; i < 20; i++) {
+            Person person;
+            do {
+                person = people.get(new Random().nextInt(people.size() - 1));
+            } while (person.isInfected() || (person.getY()<400));
             person.beInfected();
         }
     }
