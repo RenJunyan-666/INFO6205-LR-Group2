@@ -12,6 +12,12 @@ public class Person extends Point implements State{
     private Move move;
     private Boolean Super=false;//whether super infector
     private Boolean Cure=false;//whether cure from this disease
+<<<<<<< HEAD
+=======
+    private Boolean needIsolation=false;//
+    private Boolean Isolating=false;//
+
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
     int sigma = 1;
     /**
      * Gaussian distribution--N(u,sigma)
@@ -35,6 +41,15 @@ public class Person extends Point implements State{
     public Boolean getCure() {
         return Cure;
     }
+<<<<<<< HEAD
+=======
+    public Boolean getneedIsolation() {
+        return needIsolation;
+    }
+    public Boolean getIsolating() {
+        return Isolating;
+    }
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
 
     /**
      * people prefer to move when stdGaussian is positive
@@ -64,6 +79,7 @@ public class Person extends Point implements State{
     int infectedTime = 0;//time of being infected
     int confirmedTime = 0;//time of being confirmed
     int dieMoment = 0;//time of death
+    int isolationMoment = 0;//time of Isolation
 
     public boolean isInfected() {
         return state >= State.SHADOW;
@@ -82,12 +98,12 @@ public class Person extends Point implements State{
 
     //distance between two different people points
     public double distance(Person person) {
-        for(Block b : city.getBlockList()){
+        /*for(Block b : city.getBlockList()){
             if((getX() >= b.getBlockX() && getX() <= b.getBlockX()+20) && (getY() >= b.getBlockY() && getY() <= b.getBlockY()+20)){
                 //the person is blocked
                 return SAFE_DIST-0.1;//the person must be close to each other
             }
-        }
+        }*/
         return Math.sqrt(Math.pow(getX() - person.getX(), 2) + Math.pow(getY() - person.getY(), 2));
     }
 
@@ -98,7 +114,7 @@ public class Person extends Point implements State{
 
     //action of people in different states
     private void action() {
-        if (state == State.FREEZE || state == State.DEATH) {
+        if (state == State.FREEZE || state == State.DEATH||Isolating) {
             return;//cannot move
         }
         if (!wantMove()) {
@@ -110,7 +126,15 @@ public class Person extends Point implements State{
             double targetY = MathUtil.stdGaussian(targetSig, targetYU);
             move = new Move((int) targetX, (int) targetY);
         }
-
+        //if across the boundary of city,people need Isolation
+        if((getY()-400)*(move.getY()-400)<0){
+            needIsolation=true;
+            if(move.getY()<400){
+                city=new City(200,200);
+            }else{
+                city=new City(500,500);
+            }
+        }
         int dX = move.getX() - getX();
         int dY = move.getY() - getY();
         double length = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));//distance between start point and target point
@@ -158,12 +182,16 @@ public class Person extends Point implements State{
 
     public Bed useBed;
 
-    private float SAFE_DIST = 2f;//safe distance
+    private float SAFE_DIST = 3f;//safe distance
 
     //have mask or not
     public boolean mask(){
         float possibility = new Random().nextFloat();//the possibility of mask is 50%
+<<<<<<< HEAD
         if(possibility >= 2)
+=======
+        if(possibility <= Factors.MASK_RATE)
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
             return true;
         else return false;
     }
@@ -173,6 +201,7 @@ public class Person extends Point implements State{
         //if (state == State.FREEZE || state == State.DEATH) {
         if (state == State.DEATH) {
 
+<<<<<<< HEAD
             return;
         }
         //cure chance for confirmed
@@ -200,7 +229,86 @@ public class Person extends Point implements State{
                 setX(x);
                 setY(y);
             }
+=======
+            return;//don't need to update
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
+        //update people for Quarantine
+        if(needIsolation){
+            Bed bed = Quarantine.getInstance().pickBed();//find empty beds
+            if (bed == null) {
+                //System.out.println("No beds!");
+            } else {
+                useBed = bed;
+                needIsolation=false;
+                Isolating=true;
+                isolationMoment=Graph.worldTime;
+                setX(bed.getX());
+                setY(bed.getY());
+                bed.setEmpty(false);
+            }
+        }
+        //leave Quarantine,only the person who appear normal and wait enough time can leave
+
+
+        if(Isolating){
+            if(Graph.worldTime-isolationMoment>=Factors.Quarantine_WAIT_TIME &&state!=State.CONFIRMED){
+                Isolating=false;
+                Quarantine.getInstance().returnBed(useBed);
+                Random random=new Random();
+                //leave area to  city
+                    int x=(int) (100 * random.nextGaussian() + city.getCenterX());
+                    int y=(int) (100 * random.nextGaussian() + city.getCenterX());
+                    if (x > 700) x = 700;
+                    setX(x);
+                    setY(y);
+
+                }
+            }
+
+
+
+        City city1 = new City(200, 200);
+        City city2 = new City(500, 500);
+        //cure chance for confirmed after hard time
+        if(Graph.worldTime-confirmedTime>=Factors.HARD_TIME){
+        if (state == State.CONFIRMED&& dieMoment == 0 ) {
+            float destiny=new Random().nextFloat();
+            if(destiny<=Factors.CURE_RATE){
+                state = State.NORMAL;
+                dieMoment = 0;
+                Super=false;
+                Cure=true;
+
+
+            }
+        }}
+        //cure chance for freeze after  hard time
+        if(Graph.worldTime-confirmedTime>=(Factors.HARD_TIME)){
+        if (state == State.FREEZE ) {
+            float destiny=new Random().nextFloat();
+            if(destiny<=Factors.CURE_RATE){
+                state = State.NORMAL;
+                dieMoment = 0;
+                Super=false;
+                Cure=true;
+                Hospital.getInstance().returnBed(useBed);
+                Random random=new Random();
+                if(Graph.worldTime%2==0){ //leave hospital to random city
+                int x=(int) (100 * random.nextGaussian() + city1.getCenterX());
+                int y=(int) (100 * random.nextGaussian() + city1.getCenterX());
+                    if (x > 700) x = 700;
+                setX(x);
+                setY(y);
+                }else{
+                    int x=(int) (100 * random.nextGaussian() + city2.getCenterX());
+                    int y=(int) (100 * random.nextGaussian() + city2.getCenterX());
+                    if (x > 700) x = 700;
+                    setX(x);
+                    setY(y);
+                }
+            }
+        }}
 
         //update patient
         if (state == State.CONFIRMED && dieMoment == 0) {
@@ -235,7 +343,10 @@ public class Person extends Point implements State{
             Hospital.getInstance().returnBed(useBed);
             setX(400);
             setY(400);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
 
         //update shadow patients
@@ -257,14 +368,19 @@ public class Person extends Point implements State{
 
         //people below safe distance with each other can be infected randomly
         for (Person person : people) {
-            if (person.getState() == State.NORMAL) {
+            //Normal,hospital,Isolating and death people never infect others
+            if (person.getState() == State.NORMAL||person.getState() == State.DEATH||person.getIsolating()||person.getState() == State.FREEZE) {
                 continue;
             }
+<<<<<<< HEAD
 
 
 
+=======
+/*
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
             //without mask factor
-            /*float fate = new Random().nextFloat();
+            float fate = new Random().nextFloat();
             if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
                 this.beInfected();
                 break;
@@ -279,10 +395,12 @@ public class Person extends Point implements State{
              * so 0.2 * 0.8 --> one with mask and another without mask
              * 0.2 * 0.2 --> both with mask
              */
+
             float fate = new Random().nextFloat();
             float risk= Factors.BROAD_RATE;
             if(person.getSuper()){//whether super Infector
                 risk=Factors.BROAD_RATE_SUPER;
+<<<<<<< HEAD
             }
             if(this.Cure){//Only 20 percent of those who recover would infected again
                 risk=risk/5;
@@ -298,6 +416,47 @@ public class Person extends Point implements State{
                 this.beInfected();
                 break;
             }
+=======
+            }
+
+            if(this.Cure){//Only 20 percent of those who recover would infected again
+                risk=risk*Factors.RE_INFECTED_RATE;
+            }
+            if (this.mask()){
+                risk=risk*Factors.MASK;
+            }
+            if(person.mask()){
+                risk=risk*Factors.MASK;
+            }
+
+            if (fate < risk && distance(person) < SAFE_DIST) {
+                this.beInfected();
+                break;
+            }
+
+
+            /*float fate = new Random().nextFloat();
+            if(this.mask()){
+                if(person.mask()){//both with mask
+                    if (fate < Factors.MASK * Factors.MASK && distance(person) < SAFE_DIST) {
+                        this.beInfected();
+                        break;
+                    }
+                }
+                else {//one with mask
+                    if (fate < Factors.MASK * Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
+                        this.beInfected();
+                        break;
+                    }
+                }
+            }
+            else {
+                if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
+                    this.beInfected();
+                    break;
+                }
+            }*/
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
     }
 }

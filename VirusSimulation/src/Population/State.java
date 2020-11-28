@@ -7,4 +7,5 @@ public interface State {
     int CONFIRMED = SHADOW + 1;//confirmed patients
     int FREEZE = CONFIRMED + 1;//freeze patients
     int DEATH = FREEZE + 1;//dead
+    //int ISOLATION = DEATH+1;//people in quarantine
 }

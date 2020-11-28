@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 import City.Block;
 import City.City;
-import Hospital.Hospital;
+import Hospital.*;
 import Population.*;
 
 public class Graph extends JPanel implements Runnable {
@@ -25,6 +25,15 @@ public class Graph extends JPanel implements Runnable {
         g.setFont(new Font("Tahoma", Font.BOLD, 10));
         g.setColor(new Color(0x00ff00));
         g.drawString("Hospital", Hospital.getInstance().getX() + Hospital.getInstance().getWidth() / 4, Hospital.getInstance().getY() - 16);
+        //plot quarantine boundary
+        g.setColor(new Color(0x0C21E0));
+        g.drawRect(Quarantine.getInstance().getX(), Quarantine.getInstance().getY(), Quarantine.getInstance().getWidth(), Quarantine.getInstance().getHeight());
+        g.setFont(new Font("Tahoma", Font.BOLD, 10));
+        g.setColor(new Color(0x0C21E0));
+        g.drawString("Quarantine", Quarantine.getInstance().getX() + Quarantine.getInstance().getWidth() / 4, Quarantine.getInstance().getY() - 16);
+        //plot City boundary
+        g.setColor(new Color(0xBE1BEA));
+        g.drawLine(0,400,700,400);
         //plot people points
         java.util.List<Person> people = Population.getInstance().getPersonList();
         if (people == null) {
@@ -64,11 +73,11 @@ public class Graph extends JPanel implements Runnable {
         }
 
         //set blocks
-        City city = new City(400,400);
+        /*City city = new City(400,400);
         for(Block b : city.getBlockList()){
             g.setColor(Color.MAGENTA);
             g.drawRect(b.getBlockX(),b.getBlockY(),20,20);
-        }
+        }*/
 
         int captionStartOffsetX = 700 + Hospital.getInstance().getWidth() + 40;
         int captionStartOffsetY = 40;

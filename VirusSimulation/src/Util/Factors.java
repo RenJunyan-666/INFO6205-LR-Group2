@@ -5,11 +5,23 @@ public class Factors {
     public static float BROAD_RATE = 0.8f;//Virus transmission rate
     public static float SHADOW_TIME = 140;//Shadow period (1 day equals value of 10)
     public static int HOSPITAL_RECEIVE_TIME = 30;//Response time
+<<<<<<< HEAD
     public static int BED_COUNT = 1000;//Number of beds
     public static int R=3;// R factors,R=BROAD_RATE/CURE_RATE
     public static float K=0.1f;//K factors,Which means 80% of infections are caused by K*100% of positive cases.
     public static float CURE_RATE=BROAD_RATE/R;
     public static float BROAD_RATE_SUPER= 4*(1-K)*BROAD_RATE/K;
+=======
+    public static int BED_COUNT = 100;//Number of hospital beds
+    public static int Quarantine_BED_COUNT = 1000;//Number of Quarantine beds
+    public static int Quarantine_WAIT_TIME = 140;//Response time
+    public static int R=3;// R factors,R=BROAD_RATE/CURE_RATE
+    public static float K=0.1f;//K factors,Which means 80% of infections are caused by K*100% of positive cases.
+    public static float CURE_RATE=BROAD_RATE/R;
+    public static float RE_INFECTED_RATE=0.2f;//
+    public static float BROAD_RATE_SUPER= 4*(1-K)*BROAD_RATE/K;//Super infectors Broad rate
+    public static int HARD_TIME= 140;//after hard time people have cure chance
+>>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
 
     /**
      * The prevalence of testing and contact tracing range：[-0.99,0.99]
@@ -28,4 +40,5 @@ public class Factors {
     public static final int CITY_HEIGHT = 800;
 
     public static final float MASK = 0.2f;//have mask
+    public static final float MASK_RATE = 0f;//rate of people have mask
 }
