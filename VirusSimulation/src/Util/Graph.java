@@ -2,6 +2,7 @@ package Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -93,7 +94,7 @@ public class Graph extends JPanel implements Runnable {
         g.setColor(new Color(0xff0000));
         g.drawString("confirmed patients: " + Population.getInstance().getPeopleSize(Person.CONFIRMED), captionStartOffsetX, captionStartOffsetY + 3 * captionSize);
         g.setColor(new Color(0x48FFFC));
-        g.drawString("isolators: " + Population.getInstance().getPeopleSize(Person.FREEZE), captionStartOffsetX, captionStartOffsetY + 4 * captionSize);
+        g.drawString("patients in hospital: " + Population.getInstance().getPeopleSize(Person.FREEZE), captionStartOffsetX, captionStartOffsetY + 4 * captionSize);
         g.setColor(new Color(0x00ff00));
         g.drawString("empty beds: " + Math.max(Factors.BED_COUNT - Population.getInstance().getPeopleSize(Person.FREEZE), 0), captionStartOffsetX, captionStartOffsetY + 5 * captionSize);
         //define the number of demand of beds equals confirmed patients - isolators
@@ -119,6 +120,28 @@ public class Graph extends JPanel implements Runnable {
         public void run() {
             Graph.this.repaint();
             worldTime++;
+            //output
+            List<Person> people = Population.getInstance().getPersonList();
+            if(worldTime%100==0){
+                int CONFIRMED=Population.getInstance().getPeopleSize(Person.CONFIRMED)+Population.getInstance().getPeopleSize(Person.FREEZE);
+
+                int south=0;
+                int north=0;
+                for(Person p:people){
+                    if(p.getState()==2||p.getState()==3){
+                        if(p.getY()>400){
+                            if(!p.getIsolating()) {
+                                south++;
+                            }
+                        }else{
+                            if(!p.getIsolating()) {
+                                north++;
+                            }
+                        }
+                    }
+                }
+                System.out.println("Time: "+worldTime/10+" days;normal people: "+Population.getInstance().getPeopleSize(Person.NORMAL)+" ;shadow patients: "+Population.getInstance().getPeopleSize(Person.SHADOW)+" ;confirmed patients: "+CONFIRMED+" ;north patients: "+north+" ;south patients: "+south+" ;dead: "+Population.getInstance().getPeopleSize(Person.DEATH));
+            }
         }
     }
 

@@ -174,7 +174,7 @@ public class Person extends Point implements State{
 
     public Bed useBed;
 
-    private float SAFE_DIST = 3f;//safe distance
+    private float SAFE_DIST = 1.8f;//safe distance
 
     //have mask or not
     public boolean mask(){
@@ -285,7 +285,7 @@ public class Person extends Point implements State{
         if (state == State.CONFIRMED && Graph.worldTime - confirmedTime >= Factors.HOSPITAL_RECEIVE_TIME) {
             Bed bed = Hospital.getInstance().pickBed();//find empty beds
             if (bed == null) {
-                System.out.println("No beds!");
+               // System.out.println("No beds!");
             } else {
                 useBed = bed;
                 state = State.FREEZE;

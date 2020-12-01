@@ -10,7 +10,7 @@ public class Hospital extends Point{
     public static final int HOSPITAL_X = 720;
     public static final int HOSPITAL_Y = 80;
     private int width;
-    private int height = 600;
+    private int height = 60;
     private static Hospital hospital = new Hospital();
     private Point point = new Point(HOSPITAL_X, HOSPITAL_Y);//The fixed position of first bed
     private List<Bed> beds = new ArrayList<>();
@@ -38,10 +38,10 @@ public class Hospital extends Point{
             width = 0;
             height = 0;
         }
-        int column = Factors.BED_COUNT / 100;
+        int column = Factors.BED_COUNT / 10;
         width = column * 6;
         for (int i = 0; i < column; i++) {
-            for (int j = 10; j <= 606; j += 6) {
+            for (int j = 10; j <= 64; j += 6) {
                 Bed bed = new Bed(point.getX() + i * 6, point.getY() + j);
                 beds.add(bed);
                 if (beds.size() >= Factors.BED_COUNT) break;
