@@ -35,11 +35,7 @@ public class Population {
     public int getSuperInfector() {
         int i = 0;
         for (Person person : personList) {
-<<<<<<< HEAD
-            if (person.getState() >= 2&&person.getState()<=4) {
-=======
             if (person.getState() >= 2&&person.getState()<=3) {
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
                 if(person.getSuper()){
                     i++;}
             }
@@ -58,7 +54,8 @@ public class Population {
     }
 
     private Population() {
-        /*City city = new City(400, 400);//position of city center-->(400,400)
+        if(Factors.CITY_NUMBER==1){
+        City city = new City(400, 400);//position of city center-->(400,400)
         //add people in this city
         for (int i = 0; i < Factors.CITY_PERSON_SIZE; i++) {
             Random random = new Random();
@@ -67,9 +64,11 @@ public class Population {
             int y = (int) (100 * random.nextGaussian() + city.getCenterY());
             if (x > 700) x = 700;//people cannot be out the range of city
             personList.add(new Person(city, x, y));
-        }*/
+          }
+        }else{
 
         //different population density
+
         City city1 = new City(200, 200);
         City city2 = new City(500, 500);
         for (int i = 0; i < 2000; i++) {
@@ -85,6 +84,7 @@ public class Population {
             int y = (int) (100 * random.nextGaussian() + city2.getCenterY());
             if (x > 700) x = 700;
             personList.add(new Person(city2, x, y));
+        }
         }
     }
 }

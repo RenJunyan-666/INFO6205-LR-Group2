@@ -37,14 +37,28 @@ public class Hospital extends Point{
         if (Factors.BED_COUNT == 0) {
             width = 0;
             height = 0;
-        }
-        int column = Factors.BED_COUNT / 100;
-        width = column * 6;
-        for (int i = 0; i < column; i++) {
-            for (int j = 10; j <= 606; j += 6) {
-                Bed bed = new Bed(point.getX() + i * 6, point.getY() + j);
-                beds.add(bed);
-                if (beds.size() >= Factors.BED_COUNT) break;
+        }else if(Factors.BED_COUNT<100) {
+            height=60;
+            int column = Factors.BED_COUNT / 10;
+            width = column * 6;
+            for (int i = 0; i < column; i++) {
+                for (int j = 10; j <= 64; j += 6) {
+                    Bed bed = new Bed(point.getX() + i * 6, point.getY() + j);
+                    beds.add(bed);
+                    if (beds.size() >= Factors.BED_COUNT) break;
+                }
+            }
+        }else if(Factors.BED_COUNT>=100){
+
+            height=600;
+            int column = Factors.BED_COUNT / 100;
+            width = column * 6;
+            for (int i = 0; i < column; i++) {
+                for (int j = 10; j <= 606; j += 6) {
+                    Bed bed = new Bed(point.getX() + i * 6, point.getY() + j);
+                    beds.add(bed);
+                    if (beds.size() >= Factors.BED_COUNT) break;
+                }
             }
         }
     }

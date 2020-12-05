@@ -12,12 +12,9 @@ public class Person extends Point implements State{
     private Move move;
     private Boolean Super=false;//whether super infector
     private Boolean Cure=false;//whether cure from this disease
-<<<<<<< HEAD
-=======
     private Boolean needIsolation=false;//
     private Boolean Isolating=false;//
 
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
     int sigma = 1;
     /**
      * Gaussian distribution--N(u,sigma)
@@ -41,15 +38,12 @@ public class Person extends Point implements State{
     public Boolean getCure() {
         return Cure;
     }
-<<<<<<< HEAD
-=======
     public Boolean getneedIsolation() {
         return needIsolation;
     }
     public Boolean getIsolating() {
         return Isolating;
     }
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
 
     /**
      * people prefer to move when stdGaussian is positive
@@ -84,8 +78,6 @@ public class Person extends Point implements State{
     public boolean isInfected() {
         return state >= State.SHADOW;
     }
-
-
 
     public void beInfected() {
         float fate = new Random().nextFloat();
@@ -182,16 +174,12 @@ public class Person extends Point implements State{
 
     public Bed useBed;
 
-    private float SAFE_DIST = 3f;//safe distance
+    private float SAFE_DIST = 1.8f;//safe distance
 
     //have mask or not
     public boolean mask(){
         float possibility = new Random().nextFloat();//the possibility of mask is 50%
-<<<<<<< HEAD
-        if(possibility >= 2)
-=======
         if(possibility <= Factors.MASK_RATE)
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
             return true;
         else return false;
     }
@@ -201,37 +189,7 @@ public class Person extends Point implements State{
         //if (state == State.FREEZE || state == State.DEATH) {
         if (state == State.DEATH) {
 
-<<<<<<< HEAD
-            return;
-        }
-        //cure chance for confirmed
-        if (state == State.CONFIRMED && dieMoment == 0) {
-            float destiny=new Random().nextFloat();
-            if(destiny<=Factors.CURE_RATE){
-                state = State.NORMAL;
-                Cure=true;
-                int x=new Random().nextInt(700);
-                int y=new Random().nextInt(700);
-                setX(x);
-                setY(y);
-
-            }
-        }
-        //cure chance for freeze
-        if (state == State.FREEZE && dieMoment == 0) {
-            float destiny=new Random().nextFloat();
-            if(destiny<=Factors.CURE_RATE){
-                state = State.NORMAL;
-                Cure=true;
-                Hospital.getInstance().returnBed(useBed);
-                int x=new Random().nextInt(700);
-                int y=new Random().nextInt(700);
-                setX(x);
-                setY(y);
-            }
-=======
             return;//don't need to update
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
         //update people for Quarantine
         if(needIsolation){
@@ -327,7 +285,7 @@ public class Person extends Point implements State{
         if (state == State.CONFIRMED && Graph.worldTime - confirmedTime >= Factors.HOSPITAL_RECEIVE_TIME) {
             Bed bed = Hospital.getInstance().pickBed();//find empty beds
             if (bed == null) {
-                System.out.println("No beds!");
+               // System.out.println("No beds!");
             } else {
                 useBed = bed;
                 state = State.FREEZE;
@@ -343,10 +301,6 @@ public class Person extends Point implements State{
             Hospital.getInstance().returnBed(useBed);
             setX(400);
             setY(400);
-<<<<<<< HEAD
-
-=======
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
 
         //update shadow patients
@@ -365,20 +319,13 @@ public class Person extends Point implements State{
             return;
         }
 
-
         //people below safe distance with each other can be infected randomly
         for (Person person : people) {
             //Normal,hospital,Isolating and death people never infect others
             if (person.getState() == State.NORMAL||person.getState() == State.DEATH||person.getIsolating()||person.getState() == State.FREEZE) {
                 continue;
             }
-<<<<<<< HEAD
-
-
-
-=======
 /*
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
             //without mask factor
             float fate = new Random().nextFloat();
             if (fate < Factors.BROAD_RATE && distance(person) < SAFE_DIST) {
@@ -400,23 +347,6 @@ public class Person extends Point implements State{
             float risk= Factors.BROAD_RATE;
             if(person.getSuper()){//whether super Infector
                 risk=Factors.BROAD_RATE_SUPER;
-<<<<<<< HEAD
-            }
-            if(this.Cure){//Only 20 percent of those who recover would infected again
-                risk=risk/5;
-            }
-            if (this.mask()){
-                risk=risk*Factors.MASK;
-            }
-            if(person.mask()){
-                risk=risk*Factors.MASK;
-            }
-
-            if (fate < risk && distance(person) < SAFE_DIST) {
-                this.beInfected();
-                break;
-            }
-=======
             }
 
             if(this.Cure){//Only 20 percent of those who recover would infected again
@@ -456,7 +386,6 @@ public class Person extends Point implements State{
                     break;
                 }
             }*/
->>>>>>> 0bf9d04d234ca3ca5459f4251dc108b3e04771d2
         }
     }
 }
