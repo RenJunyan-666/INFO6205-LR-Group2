@@ -33,8 +33,12 @@ public class Graph extends JPanel implements Runnable {
         g.setColor(new Color(0x0C21E0));
         g.drawString("Quarantine", Quarantine.getInstance().getX() + Quarantine.getInstance().getWidth() / 4, Quarantine.getInstance().getY() - 16);
         //plot City boundary
-        g.setColor(new Color(0xBE1BEA));
-        g.drawLine(0,400,700,400);
+        if(Factors.CITY_NUMBER==1){
+
+        }else {
+            g.setColor(new Color(0xBE1BEA));
+            g.drawLine(0, 400, 700, 400);
+        }
         //plot people points
         java.util.List<Person> people = Population.getInstance().getPersonList();
         if (people == null) {
@@ -140,7 +144,7 @@ public class Graph extends JPanel implements Runnable {
                         }
                     }
                 }
-                System.out.println("Time: "+worldTime/10+" days;normal people: "+Population.getInstance().getPeopleSize(Person.NORMAL)+" ;shadow patients: "+Population.getInstance().getPeopleSize(Person.SHADOW)+" ;confirmed patients: "+CONFIRMED+" ;north patients: "+north+" ;south patients: "+south+" ;dead: "+Population.getInstance().getPeopleSize(Person.DEATH));
+                System.out.println("Time: "+worldTime/10+" days;normal people: "+Population.getInstance().getPeopleSize(Person.NORMAL)+" ;shadow patients: "+Population.getInstance().getPeopleSize(Person.SHADOW)+" ;confirmed patients: "+CONFIRMED+" ;survivors: "+Population.getInstance().getCure()+" ;super-spreaders: "+Population.getInstance().getSuperInfector()+" ;dead: "+Population.getInstance().getPeopleSize(Person.DEATH));
             }
         }
     }
