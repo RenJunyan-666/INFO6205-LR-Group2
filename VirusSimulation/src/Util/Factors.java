@@ -6,7 +6,7 @@ public class Factors {
     public static float SHADOW_TIME = 140;//Shadow period (1 day equals value of 10)
     public static int HOSPITAL_RECEIVE_TIME = 30;//Response time
     public static int BED_COUNT = 50;//Number of hospital beds
-    public static int Quarantine_BED_COUNT = 0;//Number of Quarantine beds
+    public static int Quarantine_BED_COUNT = 100;//Number of Quarantine beds
     public static int Quarantine_WAIT_TIME = 30;//Quarantine waiting time
     public static float R=3f;// R factors,R=BROAD_RATE/CURE_RATE
     public static float K=0.8f;//K factors,Which means 80% of infections are caused by K*100% of positive cases.
@@ -31,8 +31,8 @@ public class Factors {
     public static final int CITY_WIDTH = 700;
     public static final int CITY_HEIGHT = 800;
 
-    public static final float MASK = 0.2f;//have mask
-    public static final float MASK_RATE = 0.5f;//rate of people have mask
-    public static final int CITY_NUMBER= 2;//If CITY_NUMBER=1,all person would set around one center;else, there are two centers
-    public static final int INITINFECTED_MODEL= 2;//if INITINFECTED_MODEL=1 choose ORIGINAL_COUNT people as origin infected patients;INITINFECTED_MODEL=2, average setting infection source at left,middle and right;INITINFECTED_MODEL=3,only south part of population would appear origin patients.
+    public static  float MASK = 0.2f;//have mask
+    public static  float MASK_RATE = 0.5f;//rate of people have mask
+    public static  int CITY_NUMBER= 1;//If CITY_NUMBER=1,all person would set around one center;else, there are two centers
+    public static  int INITINFECTED_MODEL= 2;//if INITINFECTED_MODEL=1 choose ORIGINAL_COUNT people as origin infected patients;INITINFECTED_MODEL=2, average setting 20 infection source at left,middle and right;INITINFECTED_MODEL=3,only south part of population would appear origin 20 patients.
 }

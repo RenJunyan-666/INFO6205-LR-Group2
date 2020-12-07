@@ -65,7 +65,7 @@ public class Population {
             if (x > 700) x = 700;//people cannot be out the range of city
             personList.add(new Person(city, x, y));
           }
-        }else{
+        }else {
 
         //different population density
 

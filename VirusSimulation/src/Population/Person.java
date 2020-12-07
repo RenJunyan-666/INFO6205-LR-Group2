@@ -44,6 +44,9 @@ public class Person extends Point implements State{
     public Boolean getIsolating() {
         return Isolating;
     }
+    public void setMove(Move move){
+        this.move=move;
+    }
 
     /**
      * people prefer to move when stdGaussian is positive
